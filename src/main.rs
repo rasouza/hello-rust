@@ -12,6 +12,8 @@ struct Complex {
     imag: f64
 }
 
+struct List(Vec<i32>);
+
 fn main() {
 
     // String Interpolation
@@ -25,6 +27,7 @@ fn main() {
     let point = Complex { real: 1.4, imag: 2. };
     println!("Display: {}", point);
     println!("Debug: {:?}", point);
+    println!("Display: {}", List(vec![6,5,7,4,8]));
 }
 
 impl fmt::Display for MyStruct {
@@ -36,5 +39,17 @@ impl fmt::Display for MyStruct {
 impl fmt::Display for Complex {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:.2} + {:.2}i", self.real, self.imag)
+    }
+}
+
+impl fmt::Display for List {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let vec = &self.0;
+        write!(f, "[")?;
+        for (count, v) in vec.iter().enumerate() {
+            if count != 0 { write!(f, ", ")?; }
+            write!(f, "{}: {}", count, v)?;
+        }
+        write!(f,"]")     
     }
 }
