@@ -113,6 +113,27 @@ fn main() {
         PageUnload => println!("Page Unloaded event"),
         _ => {}
     }
+
+    // Casting
+    let decimal = 65.34_f32;
+    println!("Display decimal: {} -> {} -> {}", decimal, decimal as u8, decimal as u8 as char);
+
+    // Inference
+    let elem = 1u8;
+    let mut vec = Vec::new(); // vec type is not defined
+    vec.push(elem); // vec type is lately infered here
+    println!("Debug vec: {:?}", vec);
+
+    // Aliasing
+    type Meters = u32;
+    let distance: Meters = 3;
+    println!("Display distance: {}", distance);
+
+    // Conversion
+    let num = 42;
+    println!("Display Complex: {}", Complex::from(num));
+    let complex: Complex = 30.into();
+    println!("Display Complex: {}", complex);
 }
 
 impl fmt::Display for MyStruct {
@@ -124,6 +145,12 @@ impl fmt::Display for MyStruct {
 impl fmt::Display for Complex {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:.2} + {:.2}i", self.real, self.imag)
+    }
+}
+
+impl From<i32> for Complex {
+    fn from(num: i32) -> Self {
+        Complex { real: num as f64, imag: 0.0_f64 }
     }
 }
 
