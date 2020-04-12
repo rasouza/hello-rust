@@ -134,6 +134,144 @@ fn main() {
     println!("Display Complex: {}", Complex::from(num));
     let complex: Complex = 30.into();
     println!("Display Complex: {}", complex);
+
+    // Expressions
+    let x = 5u32;
+    let y = {
+        let x_squared = x * x;
+        let x_cube = x_squared * x;
+        x_cube + x_squared + x // This expression will be assigned to `y`
+    };
+    println!("x is {:?}", x);
+    println!("y is {:?}", y);
+
+    // Flow of Control - IF
+    let n = 5;
+    let big_n =
+        if n < 10 && n > -10 {
+            println!(", and is a small number, increase ten-fold");
+            10 * n // This expression returns an `i32`.
+        } else {
+            println!(", and is a big number, halve the number");
+            n / 2 // This expression must return an `i32` as well.
+        };
+    println!("{} -> {}", n, big_n);
+
+    // Flow of Control - LOOP
+    let mut count = 0u32;
+    println!("Let's count until infinity!");
+    loop {
+        count += 1;
+        if count == 3 {
+            println!("three");
+            continue;
+        }
+        println!("{}", count);
+        if count == 5 {
+            println!("OK, that's enough");
+            break;
+        }
+    }
+    'outer: loop {
+        println!("Entered the outer loop");
+        loop {
+            println!("Entered the inner loop");
+            break 'outer; // This breaks the outer loop
+        }
+        // println!("This point will never be reached");
+    }
+    println!("Exited the outer loop");
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+    println!("Display result: {}", result);
+
+    // Flow of Control - WHILE
+    let mut n = 1;
+    while n < 101 {
+        if n % 15 == 0 {
+            println!("fizzbuzz");
+        } else if n % 3 == 0 {
+            println!("fizz");
+        } else if n % 5 == 0 {
+            println!("buzz");
+        } else {
+            println!("{}", n);
+        }
+        n += 1;
+    }
+
+    // Flow of Control - FOR and RANGE
+    for n in 1..101 {
+        if n % 15 == 0 {
+            println!("fizzbuzz");
+        } else if n % 3 == 0 {
+            println!("fizz");
+        } else if n % 5 == 0 {
+            println!("buzz");
+        } else {
+            println!("{}", n);
+        }
+    }
+    let names = vec!["Bob", "Frank", "Ferris"];
+    for name in names.iter() {
+        match name {
+            &"Ferris" => println!("There is a rustacean among us!"),
+            _ => println!("Hello {}", name),
+        }
+    }
+
+    // Flow of Control - Match
+    let number = 13;
+    println!("Tell me about {}", number);
+    match number {
+        1 => println!("One!"),
+        2 | 3 | 5 | 7 | 11 => println!("This is a prime"),
+        13..=19 => println!("A teen"),
+        _ => println!("Ain't special"),
+    }
+    let pair = (1, 2, 3);
+    match pair { // Pattern Matching
+        (0, z, _) => println!("Captured {} ", z), // Never matched
+        (1, x, y) => println!("Captured {} and {}", x, y),
+        _ => (),
+    }
+    let reference = &42;
+    match reference {
+        &val => println!("The answer is: {}", val)
+    }
+    let mut num = 30;
+    match num {
+        ref mut num => {
+            *num += 10;
+            println!("Reference is: {}", num);
+        }
+    }
+    println!("Reference is: {}", num);
+    match complex {
+        Complex { real, imag } if real == 30_f64 => println!("Destructure: real({}), imag({})", real, imag),
+        _ => (),
+    }
+    match 16 {
+        0             => println!("I'm not born yet I guess"),
+        // Could `match` 1 ..= 12 directly but then what age
+        // would the child be? Instead, bind to `n` for the
+        // sequence of 1 ..= 12. Now the age can be reported.
+        n @ 1  ..= 12 => println!("I'm a child of age {:?}", n),
+        n @ 13 ..= 19 => println!("I'm a teen of age {:?}", n),
+        // Nothing bound. Return the result.
+        n             => println!("I'm an old person of age {:?}", n),
+    }
+
+    // Flow of Control - IF LET
+    let number = Some(7);
+    if let Some(i) = number {
+        println!("Matched {:?}!", i);
+    }
 }
 
 impl fmt::Display for MyStruct {
