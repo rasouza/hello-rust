@@ -2,7 +2,7 @@ mod basics;
 mod utils;
 mod structs;
 mod modules;
-mod closures;
+mod functions;
 
 fn main() {
 
@@ -27,6 +27,9 @@ fn main() {
 
     modules::visibility();
 
-    closures::basics();
-    closures::input_argument();
+    functions::closures();
+    functions::input_argument();
+    // functions::output_parameter();
+    // functions::high_order();
+    // functions::diverging();
 }

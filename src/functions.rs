@@ -1,4 +1,4 @@
-pub fn basics() {
+pub fn closures() {
     let base = |n| { 
         println!("Base is: {}", n);
     };
