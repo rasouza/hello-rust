@@ -272,6 +272,21 @@ fn main() {
     if let Some(i) = number {
         println!("Matched {:?}!", i);
     }
+
+    // Closures
+    let base = |n| { 
+        match n {
+            base @ 0 | base @ 1 => base,
+            _ => 2,
+        }
+    };
+    println!("Base is: {}", base(32));
+    let double = |x| 2 * x;
+    fn apply_to_3<F>(f: F) -> i32 where // Closure as input argument
+        F: Fn(i32) -> i32 {
+        f(3)
+    }
+    println!("3 doubled: {}", apply_to_3(double));
 }
 
 impl fmt::Display for MyStruct {
